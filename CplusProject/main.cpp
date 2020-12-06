@@ -121,6 +121,7 @@ void Hairida::infoDraw() {
 //맵 구현
 int Hairida::maplistDraw()
 {
+	string hairlength;
 	int x = 32;
 	int y = 10;
 	system("cls");
@@ -159,6 +160,20 @@ int Hairida::maplistDraw()
 			break;
 		}
 		case SUBMIT: {
+			if (y == 10) {
+				hairlength = "짧은 머리";
+			}
+			else if (y == 11) {
+				hairlength = "단발 머리";
+			}
+			else if (y == 12) {
+				hairlength = "긴 머리";
+			}
+			ofstream writeFile;
+			writeFile.open("hairlength.txt");
+			if (writeFile.is_open()) {
+				writeFile << hairlength;
+			}
 			return y - 10;	//스페이스바(선택)되었을 경우 y-6
 		}
 		}
@@ -167,6 +182,7 @@ int Hairida::maplistDraw()
 
 int Hairida::maplistDraw2()
 {
+	string hairstyle;
 	int x = 32;
 	int y = 10;
 	system("cls");
@@ -181,7 +197,6 @@ int Hairida::maplistDraw2()
 	cout << "곱슬머리" << endl;
 	gotoxy(x, y + 2);
 	cout << "뒤로" << endl;
-
 	while (1) {
 		int n = keyControl();	//키보드 이벤트 키값으로 받기
 		switch (n) {
@@ -203,6 +218,17 @@ int Hairida::maplistDraw2()
 			break;
 		}
 		case SUBMIT: {
+			if (y == 10) {
+				hairstyle = "|";
+			}
+			else if (y == 11) {
+				hairstyle = "$";
+			}
+			ofstream writeFile;
+			writeFile.open("hairstyle.txt");
+			if (writeFile.is_open()) {
+				writeFile << hairstyle;
+			}
 			return y - 10;	//스페이스바(선택)되었을 경우 y-6
 		}
 		}
@@ -246,21 +272,7 @@ int Hairida::maplistDraw3()
 	gotoxy(x, y + 5);
 	cout << "뒤로" << endl;
 
-	if (y == 0) {
-		color = "WHITE";
-	}
-	else if (y == 1) {
-		color = "YELLOW";
-	}
-	else if (y == 2) {
-		color = "RED";
-	}
-	else if (y == 3) {
-		color = "BLUE";
-	}
-	else if (y == 4) {
-		color = "MAGENTA";
-	}
+	
 
 	while (1) {
 		int n = keyControl();	//키보드 이벤트 키값으로 받기
@@ -283,11 +295,25 @@ int Hairida::maplistDraw3()
 			break;
 		}
 		case SUBMIT: {
+			if (y == 10) {
+				color = "WHITE";
+			}
+			else if (y == 11) {
+				color = "YELLOW";
+			}
+			else if (y == 12) {
+				color = "RED";
+			}
+			else if (y == 13) {
+				color = "BLUE";
+			}
+			else if (y == 14) {
+				color = "MAGENTA";
+			}
 			ofstream writeFile;
-			writeFile.open("hairColor.txt");
-			const char* c = color.c_str();
+			writeFile.open("haircolor.txt");
 			if (writeFile.is_open()) {
-				writeFile.write(c, 10);
+				writeFile << color;
 			}
 			
 			return y - 10;	//스페이스바(선택)되었을 경우 y-6
@@ -351,34 +377,23 @@ int main()
 
 			int n3 = h1.maplistDraw3();
 			if (n3 == 0) {
-				ofstream writeFile;	//쓸 파일 선언
-				writeFile.open("colorChange.txt");
-
-				if (writeFile.is_open())
-				{
-					writeFile.write("0", 10);
-				}
-				writeFile.close();
 			}
-			if (n1 == 0) {
-				string in_line;
-				ifstream in("hairstyle.txt");
-				while (getline(in, in_line)) {
-					if (in_line == "곱슬머리") {
-						cout << in_line;
-					}
-				}
-				in.close();
-				Sleep(1000);
+			string in_line;
+			ifstream in("hairstyle.txt");
+			while (getline(in, in_line)) {
+				string n = in_line;
+				printf("%s %s %s", n, n, n);
 			}
-			else if (n1 == 1) {
+			in.close();
+			Sleep(10000);
+			/*else if (n1 == 1) {
 				cout << "단발 머리 선택함";
 				Sleep(1000);
 			}
 			else if (n1 == 2) {
 				cout << "긴 머리 선택함";
 				Sleep(1000);
-			}
+			}*/
 		}
 		else if (menuCode == 1) {
 			//게임 설명
